@@ -61,28 +61,28 @@ aum_by_scheme = df.groupBy("Scheme_Name") \
     .agg(sum("NAV").alias("AUM")) \
     .orderBy(desc("AUM"))
 
-print("\n===== AUM BY SCHEME =====")
+print(" AUM BY SCHEME ")
 aum_by_scheme.show(10, truncate=False)
  
 fund_house_kpi = df.groupBy("Fund_House") \
     .agg(avg("NAV").alias("Avg_NAV")) \
     .orderBy(desc("Avg_NAV"))
 
-print("\n===== FUND HOUSE KPI =====")
+print(" FUND HOUSE KPI ")
 fund_house_kpi.show()
  
 top_schemes = df.groupBy("Scheme_Name") \
     .agg(avg("NAV").alias("Avg_NAV")) \
     .orderBy(desc("Avg_NAV"))
 
-print("\n===== TOP SCHEMES =====")
+print("TOP SCHEMES")
 top_schemes.show(10, truncate=False)
  
 window_spec = Window.orderBy(desc("NAV"))
 
 ranked_df = df.withColumn("rank", rank().over(window_spec))
 
-print("\n===== RANKED SCHEMES =====")
+print(" RANKED SCHEMES ")
 ranked_df.show(10, truncate=False)
  
 dim_scheme.write.mode("overwrite").parquet("output/dim_scheme")
